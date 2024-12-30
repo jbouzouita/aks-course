@@ -13,7 +13,7 @@ steps:
 - task: AzureCLI@2
   displayName: Docker Build & Push
   inputs:
-    azureSubscription: 'Microsoft-Azure-NonProd'
+    azureSubscription: 'Abonnement Azure 1'
     scriptType: 'bash'
     scriptLocation: 'inlineScript'
     inlineScript: |
@@ -21,7 +21,7 @@ steps:
       az acr login -n $(acr_name)
       docker push $(acr_name).azurecr.io/webapp:$(tag)
       
-- task: qetza.replacetokens.replacetokens-task.replacetokens@3
+- task: ReplaceFilesTokens@2
   displayName: 'Replace Image TAG'
   inputs:
     rootDirectory: '02_kubernetes_aks'
@@ -44,9 +44,9 @@ steps:
   displayName: Kubernetes Deploy
   inputs:
     connectionType: 'Azure Resource Manager'
-    azureSubscriptionEndpoint: 'Microsoft-Azure-NonProd'
-    azureResourceGroup: 'rg-aks'
-    kubernetesCluster: 'aks-cluster-dev'
+    azureSubscriptionEndpoint: 'Abonnement Azure 1'
+    azureResourceGroup: 'firstresource'
+    kubernetesCluster: 'firstacreasy'
     namespace: 'default'
     command: 'apply'
     useConfigurationFile: true
